@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <section id="page-header">
+        <h2>#stayhome</h2>
+        <p>Save more with cupons & up to 70% off!</p>
+    </section>
+
+    <section id="product1" class="section-p1">
+        <div class="pro-container">
+
+            {% for product in products %}
+            <div class="pro" onclick="window.location.href='product.html'">
+                <img src="{{ url_for('static', filename= 'images/products/f1.jpg')}}" alt="">
+                <div class="des">
+                    <span>{{ product.category }}</span>
+                    <h5>{{ product.product_title }}</h5>
+                    <div class="star">
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star"></i>
+                        <i class="lni lni-star"></i>
+                    </div>
+                    <h4>${{ product.price }}</h4>
+                </div>
+                <a href="#"><i class="lni lni-cart cart"></i></a>
+            </div>
+            {% endfor %}
+
+            
+        </div>
+    </section>
+
+    <section id="pagination" class="section-p1">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#"><i class="lni lni-arrow-right"></i></a>
+    </section>
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For Newsletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers</span>.</p>
+        </div>
+        <div class="form">
+            <input type="text" name="" id="" placeholder="Your email address">
+            <button class="normal-btn">Sign Up</button>
+        </div>
+    </section>
+
+    {% endblock %}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ custom[0].upper() }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'styles/style.css')}}">
+    <!-- https://lineicons.com/icons/ -->
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+</head>
+<body>
+    <section id="header">
+        <a href="#"><img src="{{ url_for('static', filename= 'images/logo.png')}}" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+                {% if custom[0].upper() == "HOME" and custom[1] == True %}
+                    <li><a class="active" href="/">Home</a></li>
+                {% else %}
+                    <li><a href="/">Home</a></li>
+                {% endif %}
+
+                {% if custom[0].upper() == "SHOP" and custom[1] == True %}
+                    <li><a class="active" href="/shop">Shop</a></li>
+                {% else %}
+                    <li><a href="/shop">Shop</a></li>
+                {% endif %}
+                
+                {% if custom[0].upper() == "BLOG" and custom[1] == True %}
+                    <li><a class="active" href="/blog">Blog</a></li>
+                {% else %}
+                    <li><a href="/blog">Blog</a></li>
+                {% endif %}
+
+                {% if custom[0].upper() == "ABOUT" and custom[1] == True %}
+                    <li><a class="active" href="/about">About</a></li>
+                {% else %}
+                    <li><a href="/about">About</a></li>
+                {% endif %}
+
+                {% if custom[0].upper() == "CONTACT" and custom[1] == True %}
+                    <li><a class="active" href="/contact">Contact</a></li>
+                {% else %}
+                    <li><a href="/contact">Contact</a></li>
+                {% endif %}
+
+                <li><a href="/login">Login</a></li>
+                <li id="lg-bag"><a href="cart.html"><i class="lni lni-cart"></i></a></li>
+                <i id="close" class="lni lni-close"></i>
+            </ul>
+        </div>
+        <div id="mobile">
+            <!-- <i id="bar" class="lni lni-burger"></i> -->
+            <a href="cart.html"><i class="lni lni-cart"></i></a>
+            <i id="bar" class="lni lni-burger"></i>
+        </div>
+    </section>
+
+
+<!-- BODY CONTENT -->
+{% block body %} {% endblock %}
+
+
+    <footer class="section-p1">
+        <div class="cols">
+            <div class="col">
+                <img class="logo" src="{{ url_for('static', filename= 'images/logo.png')}}" alt="">
+                <h4>Contact</h4>
+                <p><strong>Address: </strong> 01 Durgapur, Durgapur, West Bengal, India</p>
+                <p><strong>Phone: </strong> (+91) 12 3456 7890 /(+91) 09 8765 4321</p>
+                <p><strong>Hours: </strong> 11:00 - 18:00, Mon - Fri</p>
+                <div class="follow">
+                    <h4>Follow us</h4>
+                    <div class="icon">
+                        <a href="https://facebook.com"><i class="lni lni-facebook-filled"></i></a>
+                        <a href="https://twitter.com"><i class="lni lni-twitter-original"></i></a>
+                        <a href="https://instagram.com"><i class="lni lni-instagram-original"></i></a>
+                        <a href="https://pinterest.com"><i class="lni lni-pinterest"></i></a>
+                        <a href="https://youtube.com"><i class="lni lni-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col">
+                <h4>About</h4>
+                <a href="#">About us</a>
+                <a href="#">Delivery Information</a>
+                <a href="#">Priveacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Contact us</a>
+            </div>
+    
+            <div class="col">
+                <h4>My Account</h4>
+                <a href="#">Sign In</a>
+                <a href="#">View Cart</a>
+                <a href="#">My Wishlist</a>
+                <a href="#">Track My Order</a>
+                <a href="#">Help</a>
+            </div>
+    
+            <div class="col install">
+                <h4>Install App</h4>
+                <p>From App Store or Google Play</p>
+                <div class="row">
+                    <img src="{{ url_for('static', filename= 'images/pay/app.jpg')}}" alt="">
+                    <img src="{{ url_for('static', filename= 'images/pay/play.jpg')}}" alt="">
+                </div>
+                <p>Secured Payment Gateways</p>
+                <img src="{{ url_for('static', filename= 'images/pay/pay.png')}}" alt="">
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&#169; 2022, Shubham Choudhury - HTML CSS Ecommerce Template</p>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename= 'scripts/script.js')}}"></script>
+</body>
+</html>

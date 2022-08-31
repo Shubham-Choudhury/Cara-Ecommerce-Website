@@ -1,0 +1,146 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+    <section id="hero">
+        <h4>Tread-in-offer</h4>
+        <h2>Super value deals</h2>
+        <h1>On all products</h1>
+        <p>Save more with cupons & up to 70% off!</p>
+        <button>Shop Now</button>
+    </section>
+
+    <section id="feature" class="section-p1">
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename= 'images/features/f1.png')}}">
+            <h6>Free Shipping</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename= 'images/features/f2.png')}}">
+            <h6>Online Order</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename= 'images/features/f3.png')}}">
+            <h6>Save Money</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename= 'images/features/f4.png')}}">
+            <h6>Promotions</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename= 'images/features/f5.png')}}">
+            <h6>Happy Sell</h6>
+        </div>
+
+        <div class="fe-box">
+            <img src="{{ url_for('static', filename= 'images/features/f6.png')}}">
+            <h6>F24/7 Support</h6>
+        </div>
+    </section>
+
+    <section id="product1" class="section-p1">
+        <h2>Featured Products</h2>
+        <p>Summer Collection New Morden Design</p>
+        <div class="pro-container">
+            <!-- <h1>{{ fa }}</h1> -->
+            {% for f in fp %}
+            <!-- <h1>HI</h1> -->
+            <div class="pro" onclick="window.location.href='product.html'">
+                <img src="{{ url_for('static', filename= 'images/products/f1.jpg')}}" alt="">
+                <div class="des">
+                    <span>{{ f.category }}</span>
+                    <h5>{{ f.product_title }}</h5>
+                    <div class="star">
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star"></i>
+                        <i class="lni lni-star"></i>
+                    </div>
+                    <h4>${{ f.price }}</h4>
+                </div>
+                <a href="#"><i class="lni lni-cart cart"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="banner" class="section-m1">
+        <h4>Repair Services</h4>
+        <h2>Up to <span>70% Off</span> - All t-Shirts & Accessories</h2>
+        <button class="normal-btn">Explore More</button>
+    </section>
+
+    <section id="product1" class="section-p1">
+        <h2>New Arrivals</h2>
+        <p>Summer Collection New Morden Design</p>
+        <div class="pro-container">
+            {% for f in na %}
+            <!-- <h1>HI</h1> -->
+            <div class="pro" onclick="window.location.href='product.html'">
+                <img src="{{ url_for('static', filename= 'images/products/f1.jpg')}}" alt="">
+                <div class="des">
+                    <span>{{ f.category }}</span>
+                    <h5>{{ f.product_title }}</h5>
+                    <div class="star">
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star-filled"></i>
+                        <i class="lni lni-star"></i>
+                        <i class="lni lni-star"></i>
+                    </div>
+                    <h4>${{ f.price }}</h4>
+                </div>
+                <a href="#"><i class="lni lni-cart cart"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="sm-banner" class="section-p1">
+        <div class="banner-box">
+            <h4>crezy deals</h4>
+            <h2>buy 1 get 1 free</h2>
+            <span>The best classic dress is on sale at cara</span>
+            <button class="white-btn">Learn More</button>
+        </div>
+        <div class="banner-box banner-box2">
+            <h4>spring/summer</h4>
+            <h2>upcomming season</h2>
+            <span>The best classic dress is on sale at cara</span>
+            <button class="white-btn">Learn More</button>
+        </div>
+    </section>
+
+    <section id="banner3">
+        <div class="banner-box">
+            <h2>SEASONAL SALE</h2>
+            <h3>Winter Collection -50% OFF</h3>
+        </div>
+        <div class="banner-box banner-box2">
+            <h2>NEW FOOTWARE COLLECTION</h2>
+            <h3>Spring / Summer 2022</h3>
+        </div>
+        <div class="banner-box banner-box3">
+            <h2>T-SHIRTS</h2>
+            <h3>New Trendy Prints</h3>
+        </div>
+    </section>
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For Newsletters</h4>
+            <p>Get E-mail updates about our latest shop and <span>special offers</span>.</p>
+        </div>
+        <div class="form">
+            <input type="text" name="" id="" placeholder="Your email address">
+            <button class="normal-btn">Sign Up</button>
+        </div>
+    </section>
+
+    {% endblock %}
