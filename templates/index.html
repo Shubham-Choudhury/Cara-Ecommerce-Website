@@ -47,11 +47,11 @@
         <h2>Featured Products</h2>
         <p>Summer Collection New Morden Design</p>
         <div class="pro-container">
-            <!-- <h1>{{ fa }}</h1> -->
             {% for f in fp %}
             <!-- <h1>HI</h1> -->
+            {% set img = 'static/images/products/' + image %}
             <div class="pro" onclick="window.location.href='product.html'">
-                <img src="{{ url_for('static', filename= 'images/products/f1.jpg')}}" alt="">
+                <img src= "{{ img }}" alt="">
                 <div class="des">
                     <span>{{ f.category }}</span>
                     <h5>{{ f.product_title }}</h5>

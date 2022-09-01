@@ -1,7 +1,10 @@
-from flask import Flask, render_template
+# from urllib import request
+from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.secret_key = 'super-secret-key'
 
 # mysql database connection
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cara_ecommerce'
@@ -18,6 +21,12 @@ class Products(db.Model):
     stock  = db.Column(db.String(50), nullable=False)
     details = db.Column(db.String(15000), nullable=False)
 
+class Users(db.Model):
+    __tablename__ = 'users' #table name
+    name = db.Column(db.String(15000), nullable=False)
+    email  = db.Column(db.String(500), primary_key=True)
+    password  = db.Column(db.String(20000), nullable=False)
+
 @app.route("/")
 def home():
     custom = ["Home", True]
@@ -26,7 +35,7 @@ def home():
     fp = products[0:8]
     products.reverse()
     na = products[0:8]
-    image = "images/products/f1"
+    image = 'f1.jpg'
     return render_template("index.html", custom=custom, fp=fp, na=na, image=image)
 
 @app.route("/shop")
@@ -51,13 +60,66 @@ def contact():
     custom = ["Contact", True]
     return render_template("contact.html", custom=custom)
 
-@app.route("/login")
+def checkEmail(user_id):
+    result = Users.query.with_entities(Users.email).all()
+    # print(result)
+    for i in range(len(result)):
+        if(user_id in result[i][0]):
+            return True
+    return False
+
+def auth(user, password):
+    if(checkEmail(user)):
+        result = Users.query.with_entities(Users.password).filter_by(email=user).all()
+        return check_password_hash(result[0][0], password)
+    return False
+
+def sessionUser(session_user):
+    result = Users.query.with_entities(Users.email).all()
+    for i in range(len(result)):
+        if(session_user in result[i][0]):
+            return True
+    return False
+
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    if('user' in session and sessionUser(session['user'])):
+        return redirect('/')
+
+    if(request.method == "POST"):
+        user = request.form.get('user')
+        password = request.form.get('pass')
+        if(auth(user, password)):
+            session['user'] = user
+            return redirect("/")
+        
+    
+    # print(result[0][0])
     return render_template("login/login.html")
 
-@app.route("/signin")
+@app.route("/signin", methods=['GET', 'POST'])
 def signin():
+    if(request.method == "POST"):
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('pass')
+        hashed_password = generate_password_hash(password)
+
+        x = email.split("@")
+        username = x[0] + "@cara.com"
+        user = Users(user_name=username, name=name, email=email, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+
     return render_template("login/signin.html")
 
+
+@app.route("/cart")
+def cart():
+    custom = ["Cart", True]
+    if('user' in session and sessionUser(session['user'])):
+        return render_template('user/cart.html', custom=custom)
+
+    return redirect('/login')
 
 app.run(debug=True)
