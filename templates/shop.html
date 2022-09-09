@@ -11,8 +11,10 @@
         <div class="pro-container">
 
             {% for product in products %}
-            <div class="pro" onclick="window.location.href='product.html'">
-                <img src="{{ url_for('static', filename= 'images/products/f1.jpg')}}" alt="">
+            {% set fname = 'product_images/' + product.category + '-main.jpg' %}
+            <div class="pro" onclick="window.location.href='/shop/{{ product.product_key }}'">
+            <!-- <div class="pro" href="/shop/{{ product.product_key }}"> -->
+                <img src="{{ url_for('static', filename= fname)}}" alt="">
                 <div class="des">
                     <span>{{ product.category }}</span>
                     <h5>{{ product.product_title }}</h5>
@@ -23,7 +25,7 @@
                         <i class="lni lni-star"></i>
                         <i class="lni lni-star"></i>
                     </div>
-                    <h4>${{ product.price }}</h4>
+                    <h4>&#x20B9;{{ product.price }}</h4>
                 </div>
                 <a href="#"><i class="lni lni-cart cart"></i></a>
             </div>

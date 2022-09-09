@@ -4,38 +4,36 @@
 
     <section id="pro-details" class="section-p1">
         <div class="single-pro-image">
-            <img src="images/products/f1.jpg" id="MainImg" width="100%" alt="">
+            <img src="{{ url_for('static', filename= images['main'])}}" id="MainImg" width="100%" alt="">
             <div class="small-img-group">
                 <div class="small-img-col">
-                    <img src="images/products/f1.jpg" class="small-img" width="100%" alt="">
+                    <img src="{{ url_for('static', filename= images['main'])}}" class="small-img" width="100%" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="images/products/f2.jpg" class="small-img" width="100%" alt="">
+                    <img src="{{ url_for('static', filename= images['1'])}}" class="small-img" width="100%" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="images/products/f3.jpg" class="small-img" width="100%" alt="">
+                    <img src="{{ url_for('static', filename= images['2'])}}" class="small-img" width="100%" alt="">
                 </div>
                 <div class="small-img-col">
-                    <img src="images/products/f4.jpg" class="small-img" width="100%" alt="">
+                    <img src="{{ url_for('static', filename= images['3'])}}" class="small-img" width="100%" alt="">
                 </div>
             </div>
         </div>
         <div class="single-pro-details">
-            <h6>Home / T-Shirt</h6>
-            <h4>Men's Fashion T-Shirt</h4>
-            <h2>$139.00</h2>
+            <h6>Home / {{ product.category }}</h6>
+            <h4>{{ product.product_title }}</h4>
+            <h2>&#x20B9;{{ product.price }}</h2>
             <select>
                 <option>Select Size</option>
-                <option>XL</option>
-                <option>XXL</option>
-                <option>Small</option>
-                <option>Large</option>
-                <option>Medium</option>
+                {% for size in sizes %}
+                <option>{{ size }}</option>
+                {% endfor %}
             </select>
             <input type="number" value="1">
             <button class="normal">Add To Cart</button>
             <h4>Product Details</h4>
-            <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric constructed from 100% cotton, thos classic fit preshrunk jersey knit provides unmatched comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
+            <span>{{ product.details }}</span>
         </div>
     </section>
 

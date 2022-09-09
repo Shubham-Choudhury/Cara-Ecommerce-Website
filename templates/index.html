@@ -48,10 +48,11 @@
         <p>Summer Collection New Morden Design</p>
         <div class="pro-container">
             {% for f in fp %}
+            {% set fname = 'product_images/' + f.category + '-main.jpg' %}
             <!-- <h1>HI</h1> -->
             {% set img = 'static/images/products/' + image %}
-            <div class="pro" onclick="window.location.href='product.html'">
-                <img src= "{{ img }}" alt="">
+            <div class="pro" onclick="window.location.href='/shop/{{ f.product_key }}'">
+                <img src= "{{ url_for('static', filename= fname)}}" alt="">
                 <div class="des">
                     <span>{{ f.category }}</span>
                     <h5>{{ f.product_title }}</h5>
@@ -62,7 +63,7 @@
                         <i class="lni lni-star"></i>
                         <i class="lni lni-star"></i>
                     </div>
-                    <h4>${{ f.price }}</h4>
+                    <h4>&#x20B9;{{ f.price }}</h4>
                 </div>
                 <a href="#"><i class="lni lni-cart cart"></i></a>
             </div>
@@ -81,9 +82,10 @@
         <p>Summer Collection New Morden Design</p>
         <div class="pro-container">
             {% for f in na %}
+            {% set fname = 'product_images/' + f.category + '-main.jpg' %}
             <!-- <h1>HI</h1> -->
-            <div class="pro" onclick="window.location.href='product.html'">
-                <img src="{{ url_for('static', filename= 'images/products/f1.jpg')}}" alt="">
+            <div class="pro" onclick="window.location.href='/shop/{{ f.product_key }}'">
+                <img src="{{ url_for('static', filename= fname)}}" alt="">
                 <div class="des">
                     <span>{{ f.category }}</span>
                     <h5>{{ f.product_title }}</h5>
@@ -94,7 +96,7 @@
                         <i class="lni lni-star"></i>
                         <i class="lni lni-star"></i>
                     </div>
-                    <h4>${{ f.price }}</h4>
+                    <h4>&#x20B9;{{ f.price }}</h4>
                 </div>
                 <a href="#"><i class="lni lni-cart cart"></i></a>
             </div>

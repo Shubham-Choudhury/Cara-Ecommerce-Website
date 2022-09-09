@@ -31,7 +31,7 @@ class Users(db.Model):
 def home():
     custom = ["Home", True]
     products = Products.query.filter_by().all()
-    products = products*4
+    # products = products*4
     fp = products[0:8]
     products.reverse()
     na = products[0:8]
@@ -42,8 +42,23 @@ def home():
 def shop():
     custom = ["Shop", True]
     products = Products.query.filter_by().all()
-    products = products*4
+    # products = products*4
     return render_template("shop.html", custom=custom, products=products)
+
+@app.route("/shop/<string:product_key>")
+def product(product_key):
+    custom = ["Product", True]
+    product = Products.query.filter_by(product_key=product_key).first()
+    images = {
+        'main': '''product_images/''' + product.category + '-main' + '.jpg',
+        '1': '''product_images/''' + product.category + '-1' + '.jpg',
+        '2': '''product_images/''' + product.category + '-2' + '.jpg',
+        '3': '''product_images/''' + product.category + '-3' + '.jpg',
+    }
+    
+    sizes = product.size.split('-')
+    print(sizes)
+    return render_template("product.html", custom = custom, product=product, images=images, sizes=sizes)
 
 @app.route("/blog")
 def blog():
@@ -92,6 +107,8 @@ def login():
         if(auth(user, password)):
             session['user'] = user
             return redirect("/")
+        else:
+            return render_template("login.html", error="Invalid Credentials")
         
     
     # print(result[0][0])
@@ -105,9 +122,7 @@ def signin():
         password = request.form.get('pass')
         hashed_password = generate_password_hash(password)
 
-        x = email.split("@")
-        username = x[0] + "@cara.com"
-        user = Users(user_name=username, name=name, email=email, password=hashed_password)
+        user = Users( name=name, email=email, password=hashed_password)
         db.session.add(user)
         db.session.commit()
 
@@ -121,5 +136,15 @@ def cart():
         return render_template('user/cart.html', custom=custom)
 
     return redirect('/login')
+
+
+@app.route("/logout")
+def logout():
+    if('user' in session and sessionUser(session['user'])):  
+        session.pop('user')
+        return redirect('/')
+    
+    return redirect('/login')
+
 
 app.run(debug=True)
