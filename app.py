@@ -1,4 +1,5 @@
 # from urllib import request
+import email
 from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,6 +9,7 @@ app.secret_key = 'super-secret-key'
 
 # mysql database connection
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cara_ecommerce'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -26,6 +28,14 @@ class Users(db.Model):
     name = db.Column(db.String(15000), nullable=False)
     email  = db.Column(db.String(500), primary_key=True)
     password  = db.Column(db.String(20000), nullable=False)
+
+class Cart(db.Model):
+    __tablename__ = 'cart' #table name
+    sno = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(500), nullable=False)
+    product_key  = db.Column(db.String(5000), nullable=False)
+    size = db.Column(db.String(50), nullable=False)
+    quantity  = db.Column(db.String(50), nullable=False)
 
 @app.route("/")
 def home():
@@ -57,7 +67,8 @@ def product(product_key):
     }
     
     sizes = product.size.split('-')
-    print(sizes)
+    # print()
+    # print(sizes)
     return render_template("product.html", custom = custom, product=product, images=images, sizes=sizes)
 
 @app.route("/blog")
@@ -90,6 +101,7 @@ def auth(user, password):
     return False
 
 def sessionUser(session_user):
+    # print(session_user)
     result = Users.query.with_entities(Users.email).all()
     for i in range(len(result)):
         if(session_user in result[i][0]):
@@ -129,13 +141,61 @@ def signin():
     return render_template("login/signin.html")
 
 
-@app.route("/cart")
+def cart_items(items):
+    item_in_cart = []
+    for item in items:
+        product_key = item.product_key
+        product = Products.query.filter_by(product_key=product_key).first()
+        my_product = {
+            'product_key': product_key,
+            'product_title': product.product_title,
+            'price': product.price,
+            'size': item.size,
+            'quantity': item.quantity,
+            'subtotal': int(product.price)*int(item.quantity),
+            'image': '''product_images/''' + product.category + '-main' + '.jpg',
+        }
+        item_in_cart.append(my_product)
+    return item_in_cart
+
+    # print(1)
+
+@app.route("/cart", methods=['GET', 'POST'])
 def cart():
     custom = ["Cart", True]
     if('user' in session and sessionUser(session['user'])):
-        return render_template('user/cart.html', custom=custom)
+        if(request.method == "POST"):
+            size = request.form.get('size')
+            quantity = request.form.get('quantity')
+            product_key = request.form.get('product_url')
+            user_email = session['user']
+
+            add_item = Cart(email=user_email,product_key=product_key,size=size,quantity=quantity)
+            db.session.add(add_item)
+            db.session.commit()
+
+        user_email = session['user']
+        result = Cart.query.filter_by(email=user_email).all()
+        myCart = cart_items(result)
+        subTotal = 0
+        for i in myCart:
+            subTotal += i['subtotal']
+
+        
+        return render_template('user/cart.html', custom=custom, items = myCart, subTotal=subTotal)
 
     return redirect('/login')
+
+
+@app.route("/cart/remove", methods=['POST'])
+def remove_cart():
+    if(request.method == "POST"):
+        product_key = request.form.get('item_url')
+        user_email = session['user']
+        result = Cart.query.filter_by(email=user_email, product_key=product_key).first()
+        db.session.delete(result)
+        db.session.commit()
+        return redirect('/cart')
 
 
 @app.route("/logout")

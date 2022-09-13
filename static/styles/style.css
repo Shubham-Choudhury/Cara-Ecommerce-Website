@@ -924,7 +924,7 @@ footer .copyright{
 /* ABOUT PAGE */
 
 #page-header.about-header{
-    background-image: url("images/about/banner.png");
+    background-image: url("../images/about/banner.png");
 }
 
 #about-head{
