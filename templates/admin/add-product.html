@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Navbar</title>
+    <script
+      src="https://kit.fontawesome.com/aff2d2e4b7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="add-product.css" />
+  </head>
+  <body>
+    <nav>
+      <input type="checkbox" id="check" />
+      <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+      </label>
+      <label for="check" class="cross">
+        <i class="fa-solid fa-xmark"></i>
+      </label>
+
+      <label class="logo">Cara</label>
+      <ul class="nav__ul">
+        <li><a href="#">Home</a></li>
+        <li><a href="add-product.html">Add Product</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">News</a></li>
+      </ul>
+    </nav>
+
+    <div class="body">
+      <div class="container">
+        <h3>Add Product</h3>
+        <form action="">
+          <div>
+            <label class="f-left">Product Title</label><br>
+            <input type="text" required />
+          </div>
+          <div>
+            <label class="f-left">Category</label><br>
+            <label> </label><br>
+            <select name="category">
+              <option value="0">Select Category</option>
+              <option value="Shirt">Shirt</option>
+              <option value="T-Shirt">T-Shirt</option>
+              <option value="Jeans">Jeans</option>
+            </select>
+            <label id="input-err" class="err"> </label>
+          </div>
+          <div>
+            <label class="f-left">Product Sizes</label><br>
+            <input type="text" />
+          </div>
+          <div>
+            <label class="f-left">Price</label><br>
+            <input type="text" required />
+          </div>
+          <div>
+            <label class="f-left">Quantity</label><br>
+            <input type="text" required />
+          </div>
+          <div>
+            <label class="f-left">Discription</label><br>
+            <textarea cols="30" rows="20" required></textarea>
+          </div>
+          <div class="add-image">
+            <div>
+                <label style="color: red;">Main Image</label><br>
+              <input type="file" required />
+            </div>
+            <div>
+                <label> </label><br>
+              <input type="file" required />
+            </div>
+            <div>
+                <label> </label><br>
+              <input type="file" required />
+            </div>
+            <div>
+                <label> </label><br>
+              <input type="file" value="" required />
+            </div>
+          </div>
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

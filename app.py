@@ -180,9 +180,10 @@ def cart():
         subTotal = 0
         for i in myCart:
             subTotal += i['subtotal']
+        item_count = len(myCart)
 
         
-        return render_template('user/cart.html', custom=custom, items = myCart, subTotal=subTotal)
+        return render_template('user/cart.html', custom=custom, items = myCart, subTotal=subTotal, item_count=item_count)
 
     return redirect('/login')
 

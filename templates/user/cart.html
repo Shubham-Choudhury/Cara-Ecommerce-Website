@@ -7,6 +7,11 @@
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
     </section>
 
+    {% if item_count == 0 %}
+    <section id="cart" class="section-p1">
+        <h2 style="text-align: center; margin-top:10px">Empty Cart</h2>
+    </section>
+    {% else %}
     <section id="cart" class="section-p1">
         <table width="100%">
             <thead>
@@ -38,6 +43,7 @@
                     <td>&#x20B9; {{ item.subtotal }}</td>
                 </tr>
                 {% endfor %}
+                
             </tbody>
         </table>
     </section>
@@ -73,5 +79,6 @@
             <button class="normal-btn">Proceed to Checkout</button>
         </div>
     </section>
+    {% endif %}
 
     {% endblock %}

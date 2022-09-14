@@ -31,7 +31,8 @@
                     <option value="{{ size }}">{{ size }}</option>
                     {% endfor %}
                 </select>
-                <input type="number" value="1" name="quantity">
+                <span style="color:red">{{ product.stock }} items available</span><br>
+                <input type="number" value="1" name="quantity"> 
                 <input type="hidden" value="{{ product.product_key }}" name="product_url">
                 <button type="submit" class="normal">Add To Cart</button>
                 <h4>Product Details</h4>
