@@ -1,8 +1,10 @@
 # from urllib import request
-import email
 from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
@@ -11,6 +13,9 @@ app.secret_key = 'super-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/cara_ecommerce'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), "static/product_images")
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 
 
 class Products(db.Model):
@@ -36,6 +41,11 @@ class Cart(db.Model):
     product_key  = db.Column(db.String(5000), nullable=False)
     size = db.Column(db.String(50), nullable=False)
     quantity  = db.Column(db.String(50), nullable=False)
+
+class Category(db.Model):
+    __tablename__ = 'category' #table name
+    sno = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(500), nullable=False)
 
 @app.route("/")
 def home():
@@ -207,5 +217,37 @@ def logout():
     
     return redirect('/login')
 
+
+
+
+
+# ADMIN POINTS.........................................
+@app.route("/cara/admin/add-product", methods=['GET', 'POST'])
+def add_product():
+    categorys = Category.query.filter_by().all()
+    if(request.method == "POST"):
+        product_title = request.form.get('product_title')
+        category = request.form.get('category')
+        price = request.form.get('price')
+        size = request.form.get('size')
+        quantity = request.form.get('quantity')
+        description = request.form.get('description')
+        product_key = product_title.replace(' ', '-').lower() +"-" + (str(datetime.datetime.now()).replace(' ','-').replace(':','-').replace('.','-'))
+
+        main_img = request.files['main-img']
+        image2 = request.files['image2']
+        image3 = request.files['image3']
+        image4 = request.files['image4']
+
+        main_img.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(main_img.filename)))
+        image2.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(image2.filename)))
+        image3.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(image3.filename)))
+        image4.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(image4.filename)))
+
+        product = Products(product_title=product_title, category=category, price=price, size=size, details=description, product_key=product_key,
+        stock = quantity)
+        db.session.add(product)
+        db.session.commit()
+    return render_template("admin/add-product.html", categorys=categorys)
 
 app.run(debug=True)

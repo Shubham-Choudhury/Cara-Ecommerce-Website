@@ -9,7 +9,7 @@
       src="https://kit.fontawesome.com/aff2d2e4b7.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="add-product.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'styles/add-product.css')}}" />
   </head>
   <body>
     <nav>
@@ -33,54 +33,54 @@
     <div class="body">
       <div class="container">
         <h3>Add Product</h3>
-        <form action="">
+        <form action="/cara/admin/add-product" method="POST" enctype="multipart/form-data">
           <div>
             <label class="f-left">Product Title</label><br>
-            <input type="text" required />
+            <input name="product_title" type="text" required />
           </div>
           <div>
             <label class="f-left">Category</label><br>
             <label> </label><br>
             <select name="category">
               <option value="0">Select Category</option>
-              <option value="Shirt">Shirt</option>
-              <option value="T-Shirt">T-Shirt</option>
-              <option value="Jeans">Jeans</option>
+              {% for category in categorys %}
+              <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+              {% endfor %}
             </select>
             <label id="input-err" class="err"> </label>
           </div>
           <div>
             <label class="f-left">Product Sizes</label><br>
-            <input type="text" />
+            <input name="size" type="text" placeholder="S-M-L" />
           </div>
           <div>
             <label class="f-left">Price</label><br>
-            <input type="text" required />
+            <input name="price" type="text" required />
           </div>
           <div>
             <label class="f-left">Quantity</label><br>
-            <input type="text" required />
+            <input name="quantity" type="text" required />
           </div>
           <div>
             <label class="f-left">Discription</label><br>
-            <textarea cols="30" rows="20" required></textarea>
+            <textarea name="description" cols="30" rows="20" required></textarea>
           </div>
           <div class="add-image">
             <div>
                 <label style="color: red;">Main Image</label><br>
-              <input type="file" required />
+              <input name="main-img" accept=".jpg" type="file" required />
             </div>
             <div>
                 <label> </label><br>
-              <input type="file" required />
+              <input name="image2" accept=".jpg" type="file" required />
             </div>
             <div>
                 <label> </label><br>
-              <input type="file" required />
+              <input name="image3" accept=".jpg" type="file" required />
             </div>
             <div>
                 <label> </label><br>
-              <input type="file" value="" required />
+              <input name="image4" accept=".jpg" type="file" value="" required />
             </div>
           </div>
           <button type="submit">Add Product</button>
